@@ -1,4 +1,4 @@
-# weatherapp
+# weatherapp ☼
 
 ##Sobre la app:
 
