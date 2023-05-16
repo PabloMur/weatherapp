@@ -1,6 +1,6 @@
 # weatherapp
 
-Sobre la app:
+##Sobre la app:
 
 El objetivo principal de esta app es consumir la API de Open Weather.
 Tratar de construir una interfaz de usuario amigable, simple y sencilla.
