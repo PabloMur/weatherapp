@@ -1,0 +1,8 @@
+.root {
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(31, 31, 31);
+  color: wheat;
+}
