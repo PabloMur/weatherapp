@@ -1,0 +1,26 @@
+.root {
+  height: 40vh;
+  width: 60%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+}
+
+.cityNameContainer {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+.tmpContainer {
+  width: 40%;
+  height: 100%;
+  background-color: rgb(103, 79, 168);
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}

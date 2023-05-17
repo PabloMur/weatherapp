@@ -1,7 +1,11 @@
 .root {
   height: 100vh;
   width: 100%;
-  background-image: linear-gradient(orange, purple);
+  /*background-image: linear-gradient(orange, purple);*/
+  background-image: url("../../assets/lobo.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   margin: 0;
   display: flex;
   align-items: center;
