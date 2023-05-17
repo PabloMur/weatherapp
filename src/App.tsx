@@ -4,10 +4,9 @@ import { Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { AppRoutes } from "./router";
 import { RecoilRoot } from "recoil";
-import { Loader } from "./components/loader";
 function App() {
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense>
       <RecoilRoot>
         <BrowserRouter>
           <AppRoutes />

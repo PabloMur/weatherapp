@@ -1,8 +1,3 @@
-import React from "react";
-import css from "./styles.module.css";
-
-const Loader = () => {
+export const Loader = () => {
   return <>Loader</>;
 };
-
-export { Loader };
