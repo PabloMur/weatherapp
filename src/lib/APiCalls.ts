@@ -13,6 +13,8 @@ export async function APIgetWeather() {
     const response = await fetch(url, options);
     const result = await response.json();
     console.log(result);
+    console.log("Esto esta pasando");
+
     return result;
   } catch (error) {
     console.error(error);
