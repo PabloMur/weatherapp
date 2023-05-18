@@ -1,5 +1,5 @@
 import { useSetRecoilState } from "recoil";
-import { APIgetWeather } from "../lib/APiCalls";
+//import { APIgetWeather } from "../lib/APiCalls";
 import { cityNameAtom, tmpAtom, tmpImgAtom, dayMoment } from "../atoms";
 import { mock } from "./mockResponse";
 
