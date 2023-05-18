@@ -1,7 +1,7 @@
 import { useSetRecoilState } from "recoil";
-//import { APIgetWeather } from "../lib/APiCalls";
+import { APIgetWeather } from "../lib/APiCalls";
 import { cityNameAtom, tmpAtom, tmpImgAtom, dayMoment } from "../atoms";
-import { mock } from "./mockResponse";
+//import { mock } from "./mockResponse";
 
 export const useGetWeather = () => {
   const citySetter = useSetRecoilState(cityNameAtom);
@@ -9,7 +9,7 @@ export const useGetWeather = () => {
   const tmpImgSetter = useSetRecoilState(tmpImgAtom);
   const dayMommentSetter = useSetRecoilState(dayMoment);
   const putCityName = async () => {
-    const result = mock; //await APIgetWeather();
+    const result = await APIgetWeather();
     console.log(result);
     citySetter(result.location.name);
     tpmSetter(result.current.temp_c);

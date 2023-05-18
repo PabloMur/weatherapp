@@ -8,7 +8,7 @@
 }
 
 .morning {
-  background-color: #ffd900;
+  background-image: linear-gradient(230deg, rgb(112, 138, 255), #ffd900);
   height: 100vh;
   width: 100%;
   display: flex;

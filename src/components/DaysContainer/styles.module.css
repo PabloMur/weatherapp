@@ -1,0 +1,9 @@
+.root {
+  height: 40%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}

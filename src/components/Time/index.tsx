@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import css from "./styles.module.css";
 
-const FechaActual: React.FC = () => {
-  const [fecha, setFecha] = useState(new Date());
+const Time: React.FC = () => {
+  const [time, setTime] = useState(new Date());
 
   useEffect(() => {
     const timerID = setInterval(() => {
-      setFecha(new Date());
+      setTime(new Date());
     }, 1000);
 
     return () => {
@@ -15,9 +16,9 @@ const FechaActual: React.FC = () => {
 
   return (
     <div>
-      <p>{fecha.toLocaleTimeString()}</p>
+      <p className={css.time}>{time.toLocaleTimeString()}</p>
     </div>
   );
 };
 
-export default FechaActual;
+export default Time;

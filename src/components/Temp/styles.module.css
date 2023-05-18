@@ -4,7 +4,7 @@
   font-size: 150px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   color: white;
   background-image: url("../../assets/lobo.jpg");
@@ -19,13 +19,29 @@
   background-color: rgba(0, 0, 0, 0.479);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   height: 100%;
   width: 100%;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 .img {
   height: 100px;
   width: auto;
+}
+
+.timeContainer {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.days {
+  height: 40%;
+  width: 100%;
 }

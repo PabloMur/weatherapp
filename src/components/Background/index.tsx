@@ -48,7 +48,7 @@ export const Background = ({ children }: any) => {
   const moment = useRecoilValue(dayMoment);
   console.log(moment);
 
-  if (moment == "Sunny") {
+  if (moment == "Sunny" || moment == "Partly cloudy") {
     return (
       <>
         <Morning>{children}</Morning>
