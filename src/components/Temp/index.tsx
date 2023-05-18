@@ -6,8 +6,10 @@ export const Temp = ({ tmp }: any) => {
   return (
     <>
       <div className={css.root}>
-        {tmp}
-        <img src={imgUrl} alt="weather icon" />
+        <div className={css.filter}>
+          <img src={imgUrl} alt="weather icon" className={css.img} />
+          {tmp}
+        </div>
       </div>
     </>
   );

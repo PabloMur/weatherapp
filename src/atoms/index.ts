@@ -17,5 +17,5 @@ export const tmpImgAtom = atom({
 
 export const dayMoment = atom({
   key: "dayMoment",
-  default: "",
+  default: "morning",
 });

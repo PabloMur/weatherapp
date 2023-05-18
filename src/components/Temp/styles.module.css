@@ -1,9 +1,31 @@
 .root {
   height: 100%;
   width: 100%;
-  font-size: 90px;
+  font-size: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   color: white;
+  background-image: url("../../assets/lobo.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.filter {
+  background-color: rgba(0, 0, 0, 0.479);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.img {
+  height: 100px;
+  width: auto;
 }

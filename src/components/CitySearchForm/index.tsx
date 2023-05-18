@@ -6,6 +6,7 @@ import { useRecoilValue } from "recoil";
 import { useEffect } from "react";
 import { Temp } from "../Temp";
 import { Background } from "../Background";
+import FechaActual from "../Date";
 export function CitySearch() {
   const putName = useGetWeather();
   const tmp = useRecoilValue(tmpAtom);
@@ -19,6 +20,7 @@ export function CitySearch() {
         <div className={css.root}>
           <div className={css.cityNameContainer}>
             <CityName cityname={cityName} />
+            <FechaActual />
           </div>
           <div className={css.tmpContainer}>
             <Temp tmp={tmp} />

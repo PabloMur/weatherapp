@@ -1,12 +1,14 @@
 import css from "./styles.module.css";
+import { dayMoment } from "../../atoms";
+import { useRecoilValue } from "recoil";
 
-// const Morning = ({ children }: any) => {
-//   return (
-//     <>
-//       <div className={css.night}>{children}</div>
-//     </>
-//   );
-// };
+const Morning = ({ children }: any) => {
+  return (
+    <>
+      <div className={css.morning}>{children}</div>
+    </>
+  );
+};
 // const Noon = ({ children }: any) => {
 //   return (
 //     <>
@@ -43,9 +45,20 @@ import css from "./styles.module.css";
 //   );
 // };
 export const Background = ({ children }: any) => {
-  return (
-    <>
-      <div className={css.root}>{children}</div>
-    </>
-  );
+  const moment = useRecoilValue(dayMoment);
+  console.log(moment);
+
+  if (moment == "Sunny") {
+    return (
+      <>
+        <Morning>{children}</Morning>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className={css.root}>{children}</div>
+      </>
+    );
+  }
 };
