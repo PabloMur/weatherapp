@@ -14,3 +14,8 @@ export const tmpImgAtom = atom({
   key: "tmpImgAtom",
   default: "",
 });
+
+export const dayMoment = atom({
+  key: "dayMoment",
+  default: "",
+});

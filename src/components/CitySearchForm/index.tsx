@@ -5,6 +5,7 @@ import { CityName } from "../CityName";
 import { useRecoilValue } from "recoil";
 import { useEffect } from "react";
 import { Temp } from "../Temp";
+import { Background } from "../Background";
 export function CitySearch() {
   const putName = useGetWeather();
   const tmp = useRecoilValue(tmpAtom);
@@ -14,14 +15,16 @@ export function CitySearch() {
   const cityName = useRecoilValue(cityNameAtom);
   return (
     <>
-      <div className={css.root}>
-        <div className={css.cityNameContainer}>
-          <CityName cityname={cityName} />
+      <Background>
+        <div className={css.root}>
+          <div className={css.cityNameContainer}>
+            <CityName cityname={cityName} />
+          </div>
+          <div className={css.tmpContainer}>
+            <Temp tmp={tmp} />
+          </div>
         </div>
-        <div className={css.tmpContainer}>
-          <Temp tmp={tmp} />
-        </div>
-      </div>
+      </Background>
     </>
   );
 }

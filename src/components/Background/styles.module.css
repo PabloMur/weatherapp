@@ -1,4 +1,18 @@
 .root {
   height: 100vh;
   width: 100%;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.morning {
+}
+
+.night {
+  background-image: url("../../assets/lobo.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
