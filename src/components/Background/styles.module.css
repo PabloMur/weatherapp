@@ -1,14 +1,14 @@
 .root {
   height: 100vh;
   width: 100%;
-  background-color: red;
+  background-color: black;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .morning {
-  background-image: linear-gradient(230deg, rgb(112, 138, 255), #ffd900);
+  background-image: linear-gradient(45deg, white, var(--morning-color));
   height: 100vh;
   width: 100%;
   display: flex;
@@ -17,7 +17,8 @@
 }
 
 .noon {
-  background-color: #ffed00;
+  background-color: var(--noon-color);
+  background-image: linear-gradient(45deg, white, var(--noon-color));
   height: 100vh;
   width: 100%;
   display: flex;
@@ -26,16 +27,28 @@
 }
 
 .afternoon {
-  background-color: #ffa500;
+  background-image: linear-gradient(45deg, white, var(--afternoon-color));
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .night {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-color: #000080;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(45deg, white, var(--night-color));
 }
 
 .midnight {
-  background-color: #000033;
+  background-image: linear-gradient(45deg, white, var(--midnight-color));
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

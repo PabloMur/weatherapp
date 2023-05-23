@@ -7,7 +7,6 @@
   justify-content: space-between;
   flex-direction: column;
   color: white;
-  background-image: url("../../assets/lobo.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -16,7 +15,7 @@
 }
 
 .filter {
-  background-color: rgba(0, 0, 0, 0.479);
+  background-color: rgba(0, 0, 0, 0.534);
   display: flex;
   align-items: center;
   justify-content: space-between;
