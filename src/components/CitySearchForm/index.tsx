@@ -20,8 +20,8 @@ export function CitySearch() {
         <div className={css.root}>
           <div className={css.cityNameContainer}>
             <h1>Welcome Pol:</h1>
-            <CityName cityname={cityName} />
             <CurrentDate />
+            <CityName cityname={cityName} />
           </div>
           <div className={css.tmpContainer}>
             <Temp tmp={tmp} />
