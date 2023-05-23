@@ -4,3 +4,10 @@
   padding: 0;
   font-family: "Roboto", sans-serif;
 }
+:root {
+  --morning-color: #fdb813;
+  --noon-color: #00aeef;
+  --afternoon-color: #ff7600;
+  --night-color: #193366;
+  --midnight-color: #000000;
+}
