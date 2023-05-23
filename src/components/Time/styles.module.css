@@ -1,6 +1,6 @@
 .time {
   font-size: 25px;
-  font-family: "Roboto", sans-serif;
+  font-family: var(--numbers);
 }
 
 @media screen and (max-width: 600px) {

@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: var(--numbers);
 }
 :root {
   --morning-color: #fdb813;
@@ -10,4 +10,6 @@
   --afternoon-color: #ff7600;
   --night-color: #193366;
   --midnight-color: #000000;
+
+  --numbers: "Chakra Petch", sans-serif;
 }

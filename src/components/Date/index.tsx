@@ -13,9 +13,15 @@ const FechaActual: React.FC = () => {
     };
   }, []);
 
+  const fechaActual = fecha.toLocaleString("es-ES", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <div>
-      <p>{fecha.toLocaleTimeString()}</p>
+      <p>{fechaActual}</p>
     </div>
   );
 };

@@ -15,7 +15,8 @@
 }
 
 .filter {
-  background-color: rgba(0, 0, 0, 0.534);
+  font-family: var(--numbers);
+  /*background-color: rgba(0, 0, 0, 0.534);*/
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -36,7 +37,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 20px;
 }
 
