@@ -8,7 +8,7 @@
 }
 
 .morning {
-  background-image: linear-gradient(45deg, white, var(--morning-color));
+  background-color: var(--midnight-color);
   height: 100vh;
   width: 100%;
   display: flex;
@@ -18,7 +18,6 @@
 
 .noon {
   background-color: var(--noon-color);
-  background-image: linear-gradient(45deg, white, var(--noon-color));
   height: 100vh;
   width: 100%;
   display: flex;
@@ -27,7 +26,7 @@
 }
 
 .afternoon {
-  background-image: linear-gradient(45deg, white, var(--afternoon-color));
+  background-color: var(--afternoon-color);
   height: 100vh;
   width: 100%;
   display: flex;
@@ -36,16 +35,16 @@
 }
 
 .night {
+  background-color: var(--night-color);
   height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(45deg, white, var(--night-color));
 }
 
 .midnight {
-  background-image: linear-gradient(45deg, white, var(--midnight-color));
+  background-color: var(--midnight-color);
   height: 100vh;
   width: 100%;
   display: flex;
