@@ -10,7 +10,6 @@ export const useGetWeather = () => {
   const dayMommentSetter = useSetRecoilState(dayMoment);
   const putCityName = async () => {
     const result = await APIgetWeather();
-    console.log(result);
     citySetter(result.location.name);
     tpmSetter(result.current.temp_c);
     tmpImgSetter(result.current.condition.icon);

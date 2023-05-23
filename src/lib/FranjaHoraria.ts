@@ -1,18 +1,13 @@
-function asignarMomentoDelDia(franjaHoraria: any) {
+export function asignarMomentoDelDia(franjaHoraria: any) {
   if (franjaHoraria >= 6 && franjaHoraria <= 9) {
-    return "Morning (Mañana)";
+    return "morning";
   } else if (franjaHoraria >= 10 && franjaHoraria <= 12) {
-    return "Noon (Mediodía)";
+    return "noon";
   } else if (franjaHoraria >= 13 && franjaHoraria <= 17) {
-    return "Afternoon (Tarde)";
+    return "afternoon";
   } else if (franjaHoraria >= 18 && franjaHoraria <= 20) {
-    return "Night (Noche)";
+    return "night";
   } else {
-    return "Midnight (Medianoche)";
+    return "midnight";
   }
 }
-
-// Ejemplo de uso
-var hora = new Date().getHours(); // Obtener la hora actual
-var momentoDelDia = asignarMomentoDelDia(hora);
-console.log(momentoDelDia);
