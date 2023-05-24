@@ -1,5 +1,5 @@
 export function asignarMomentoDelDia(franjaHoraria: any) {
-  if (franjaHoraria >= 6 && franjaHoraria <= 9) {
+  if (franjaHoraria >= "06" && franjaHoraria <= "09") {
     return "morning";
   } else if (franjaHoraria >= 10 && franjaHoraria <= 12) {
     return "noon";

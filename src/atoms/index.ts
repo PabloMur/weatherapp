@@ -19,3 +19,8 @@ export const dayMoment = atom({
   key: "dayMoment",
   default: "morning",
 });
+
+export const weather = atom({
+  key: "weather",
+  default: "",
+});
