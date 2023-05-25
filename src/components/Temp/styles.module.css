@@ -41,6 +41,12 @@
   padding: 20px;
 }
 
+@media screen and (max-wight: 600px) {
+  .timeContainer {
+    justify-content: center;
+  }
+}
+
 .days {
   height: 40%;
   width: 100%;
