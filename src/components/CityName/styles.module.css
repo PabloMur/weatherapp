@@ -1,3 +1,10 @@
 .cityname {
   font-size: 2rem;
+  color: black;
+}
+
+.img {
+  height: 50px;
+  width: auto;
+  margin-left: 10px;
 }

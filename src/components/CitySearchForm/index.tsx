@@ -21,10 +21,16 @@ export function CitySearch() {
       <Background>
         <div className={css.root}>
           <div className={css.cityNameContainer}>
-            <h1>Welcome Pol:</h1>
-            <CityName cityname={cityName} />
-            <WeatherComp />
-            <Humidity />
+            <div className={css.welcome}>
+              <h1 className={css.welcomeTitle}>Welcome Pol:</h1>
+            </div>
+            <div className={css.city}>
+              <CityName cityname={cityName} />
+            </div>
+            <div className={css.info}>
+              <WeatherComp />
+              <Humidity />
+            </div>
           </div>
           <div className={css.tmpContainer}>
             <Temp tmp={tmp} />

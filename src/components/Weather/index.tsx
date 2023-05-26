@@ -7,7 +7,7 @@ export const WeatherComp = () => {
 
   return (
     <div>
-      <p className={css.p}>{moment}</p>
+      <p className={css.p}>Condition: {moment}</p>
     </div>
   );
 };
