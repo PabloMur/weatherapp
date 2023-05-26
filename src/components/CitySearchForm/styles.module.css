@@ -24,7 +24,7 @@
 
 .city {
   width: 100%;
-  padding: 10px;
+  height: 15%;
   border-bottom: 2px solid black;
   display: flex;
   align-items: center;
