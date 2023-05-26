@@ -28,6 +28,7 @@
   font-size: 30px;
   color: wheat;
   background-color: black;
+  border-right: 2px solid white;
 }
 
 @media screen and (max-width: 600px) {
