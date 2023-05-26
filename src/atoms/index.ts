@@ -27,5 +27,5 @@ export const weather = atom({
 
 export const humidity = atom({
   key: "humidity",
-  default: "150",
+  default: 0,
 });
