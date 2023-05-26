@@ -3,8 +3,8 @@ import { tmpImgAtom } from "../../atoms";
 import { useRecoilValue } from "recoil";
 import Time from "../Time";
 import CurrentDate from "../CurrentDate";
+import CityComponent from "../DaysContainer";
 
-//import CityComponent from "../DaysContainer";
 export const Temp = ({ tmp }: any) => {
   const imgUrl = useRecoilValue(tmpImgAtom);
   return (
@@ -16,7 +16,10 @@ export const Temp = ({ tmp }: any) => {
             <Time />
           </div>
           <img src={imgUrl} alt="weather icon" className={css.img} />
-          {tmp}º<div className={css.days}></div>
+          {tmp}º
+          <div className={css.cities}>
+            <CityComponent />
+          </div>
         </div>
       </div>
     </>

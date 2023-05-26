@@ -1,9 +1,9 @@
 .root {
-  height: 40%;
+  height: 100%;
   width: 100%;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
+  border-top: 2px solid black;
 }

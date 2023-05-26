@@ -3,7 +3,7 @@ import icon from "../../assets/vacations.png";
 export const CityName = ({ cityname }: any) => {
   return (
     <>
-      <h1 className={css.cityname}>{cityname}</h1>
+      <h2 className={css.cityname}>{cityname}</h2>
       <img className={css.img} src={icon} alt="beach" />
     </>
   );

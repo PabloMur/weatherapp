@@ -1,10 +1,8 @@
 .root {
-  background-color: rgba(0, 0, 0, 0.63);
   width: 30%;
   height: 100%;
   font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 25px;
 }
