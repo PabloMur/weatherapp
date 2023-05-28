@@ -41,7 +41,7 @@
   padding: 20px;
 }
 
-@media screen and (max-wight: 600px) {
+@media screen and (max-width: 600px) {
   .timeContainer {
     justify-content: center;
   }

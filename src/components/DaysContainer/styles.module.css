@@ -7,3 +7,9 @@
   gap: 10px;
   border-top: 2px solid black;
 }
+
+@media screen and (max-width: 600px) {
+  .root {
+    display: none;
+  }
+}
