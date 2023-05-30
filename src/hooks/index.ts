@@ -1,6 +1,13 @@
 import { useSetRecoilState } from "recoil";
 import { APIgetWeather } from "../lib/APiCalls";
-import { cityNameAtom, tmpAtom, tmpImgAtom, weather, humidity } from "../atoms";
+import {
+  cityNameAtom,
+  tmpAtom,
+  tmpImgAtom,
+  weather,
+  humidity,
+  termalSensation,
+} from "../atoms";
 //import { mock } from "./mockResponse";
 
 export const useGetWeather = () => {
@@ -8,7 +15,7 @@ export const useGetWeather = () => {
   const tpmSetter = useSetRecoilState(tmpAtom);
   const tmpImgSetter = useSetRecoilState(tmpImgAtom);
   const humiditySetter = useSetRecoilState(humidity);
-
+  const termalSensationSetter = useSetRecoilState(termalSensation);
   const weatherSetter = useSetRecoilState(weather);
   const putCityName = async () => {
     const result = await APIgetWeather();
@@ -17,6 +24,7 @@ export const useGetWeather = () => {
     tmpImgSetter(result.current.condition.icon);
     weatherSetter(result.current.condition.text);
     humiditySetter(result.current.humidity);
+    termalSensationSetter(result.current.feelslike_c);
   };
   return putCityName;
 };

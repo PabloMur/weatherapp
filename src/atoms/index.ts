@@ -29,3 +29,8 @@ export const humidity = atom({
   key: "humidity",
   default: 0,
 });
+
+export const termalSensation = atom({
+  key: "termalSensation",
+  default: "",
+});

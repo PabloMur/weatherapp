@@ -6,7 +6,7 @@ export const Humidity = () => {
   return (
     <>
       <div>
-        <p className={css.p}>Humidity: {hum}</p>
+        <p className={css.p}>Humidity: {hum}%</p>
       </div>
     </>
   );

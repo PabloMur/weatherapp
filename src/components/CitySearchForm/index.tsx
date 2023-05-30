@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { Temp } from "../Temp";
 import { Background } from "../Background";
 import { WeatherComp } from "../Weather";
-import { Humidity } from "../Humidity";
 
 export function CitySearch() {
   const getWeather = useGetWeather();
@@ -29,7 +28,6 @@ export function CitySearch() {
             </div>
             <div className={css.info}>
               <WeatherComp />
-              <Humidity />
             </div>
           </div>
           <div className={css.tmpContainer}>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import css from "./styles.module.css";
 
 const FechaActual: React.FC = () => {
   const [fecha, setFecha] = useState(new Date());
@@ -20,7 +21,7 @@ const FechaActual: React.FC = () => {
   });
 
   return (
-    <div>
+    <div className={css.root}>
       <p>{fechaActual}</p>
     </div>
   );

@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 import Time from "../Time";
 import CurrentDate from "../CurrentDate";
 import CityComponent from "../DaysContainer";
+//import FechaActual from "../Date";
 
 export const Temp = ({ tmp }: any) => {
   const imgUrl = useRecoilValue(tmpImgAtom);
