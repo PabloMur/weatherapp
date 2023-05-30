@@ -10,7 +10,6 @@
 
 @media screen and (max-width: 600px) {
   .root {
-    height: 90vh;
     width: 90%;
     flex-direction: column;
   }
