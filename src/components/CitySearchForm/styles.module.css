@@ -10,9 +10,8 @@
 
 @media screen and (max-width: 600px) {
   .root {
-    min-height: 90vh;
+    height: 90vh;
     width: 90%;
-
     flex-direction: column;
   }
 }
@@ -86,7 +85,7 @@
 @media screen and (max-width: 600px) {
   .tmpContainer {
     width: 100%;
-    min-height: 60vh;
+    min-height: 60%;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
   }
