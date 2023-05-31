@@ -10,7 +10,7 @@
   border: 2px solid black;
 }
 .night {
-  border: 2px solid white;
+  border: 2px solid rgb(216, 213, 213);
 }
 
 @media screen and (max-width: 600px) {
