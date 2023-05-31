@@ -1,6 +1,6 @@
 .city {
   height: 100%;
-  width: 90%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,7 +8,6 @@
 
 .cityname {
   font-size: 2rem;
-  color: black;
 }
 
 .imgCont {
@@ -17,12 +16,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.borderDay {
   border-left: 2px solid black;
+}
+
+.borderNight {
+  border-left: 2px solid white;
 }
 
 .img {
   height: 40px;
   width: auto;
-  border: 1.5px solid black;
+  border: 1.5px solid rgb(0, 0, 0);
   border-radius: 50%;
 }

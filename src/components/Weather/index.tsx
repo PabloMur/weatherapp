@@ -2,7 +2,7 @@ import { weather, termalSensation, humidity } from "../../atoms";
 import { useRecoilValue } from "recoil";
 import css from "./styles.module.css";
 
-export const WeatherComp = () => {
+export const WeatherInfo = () => {
   const moment = useRecoilValue(weather);
   const termalSens = useRecoilValue(termalSensation);
   const hum = useRecoilValue(humidity);

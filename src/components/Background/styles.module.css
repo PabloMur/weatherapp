@@ -6,6 +6,14 @@
   align-items: center;
 }
 
+.day {
+  color: black;
+}
+
+.night {
+  color: rgb(216, 213, 213);
+}
+
 .morning {
   background-color: var(--morning-color);
 }

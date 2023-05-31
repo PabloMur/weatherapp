@@ -1,11 +1,11 @@
 import { Footer } from "../../components/Footer";
-import { CitySearch } from "../../components/CitySearchForm";
+import { WeatherDataContainer } from "../../components/WeatherDataContainer";
 import css from "./styles.module.css";
 export function Home() {
   return (
     <>
       <div className={css.root}>
-        <CitySearch />
+        <WeatherDataContainer />
       </div>
       <Footer />
     </>
