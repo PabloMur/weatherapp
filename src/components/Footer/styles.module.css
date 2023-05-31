@@ -4,9 +4,16 @@
   justify-content: center;
   align-items: center;
   background-color: rgb(31, 31, 31);
-  color: wheat;
 }
 
 .p {
   font-size: 10px;
+}
+
+.dia {
+  color: greenyellow;
+}
+
+.noche {
+  color: white;
 }

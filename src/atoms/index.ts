@@ -17,7 +17,7 @@ export const tmpImgAtom = atom({
 
 export const dayMoment = atom({
   key: "dayMoment",
-  default: "morning",
+  default: "",
 });
 
 export const weather = atom({
@@ -33,4 +33,9 @@ export const humidity = atom({
 export const termalSensation = atom({
   key: "termalSensation",
   default: "",
+});
+
+export const isDay = atom({
+  key: "isDay",
+  default: true,
 });
