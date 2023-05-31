@@ -1,0 +1,20 @@
+.root {
+  height: 60%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 20%;
+}
+
+.p {
+  font-size: 30px;
+}
+
+.borderTopDay {
+  border-top: 2px solid black;
+}
+.borderTopNight {
+  border-top: 2px solid white;
+}

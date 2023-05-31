@@ -1,13 +1,13 @@
 import css from "./styles.module.css";
-import { tmpImgAtom } from "../../atoms";
+import { tmpAtom, tmpImgAtom } from "../../atoms";
 import { useRecoilValue } from "recoil";
 import Time from "../Time";
 import CurrentDate from "../CurrentDate";
 import CityComponent from "../DaysContainer";
-//import FechaActual from "../Date";
 
-export const Temp = ({ tmp }: any) => {
+export const Temp = () => {
   const imgUrl = useRecoilValue(tmpImgAtom);
+  const tmp = useRecoilValue(tmpAtom);
   return (
     <>
       <div className={css.root}>

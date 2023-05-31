@@ -1,21 +1,10 @@
 .root {
   height: 100%;
-  width: 100%;
-  font-size: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
+  width: 60%;
 }
 
 .filter {
-  font-family: var(--numbers);
-  /*background-color: rgba(0, 0, 0, 0.534);*/
+  font-size: 150px;
   display: flex;
   align-items: center;
   justify-content: space-between;

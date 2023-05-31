@@ -2,4 +2,16 @@
   height: 80vh;
   width: 80%;
   margin: 10vh auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+}
+
+.day {
+  border: 2px solid black;
+}
+
+.night {
+  border: 2px solid white;
 }
