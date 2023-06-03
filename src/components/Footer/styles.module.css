@@ -10,3 +10,9 @@
   font-size: 18px;
   color: white;
 }
+
+@media screen and (max-width: 600px) {
+  .p {
+    font-size: 12px;
+  }
+}
