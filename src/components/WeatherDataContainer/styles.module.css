@@ -7,10 +7,30 @@
   justify-content: center;
 }
 
+@media screen and (max-width: 600px) {
+  .root {
+    width: 100%;
+    height: 50%;
+  }
+}
+
 .day {
   border-right: 2px solid black;
+}
+@media screen and (max-width: 600px) {
+  .day {
+    border-right: none;
+    border-bottom: 2px solid black;
+  }
 }
 
 .night {
   border-right: 2px solid white;
+}
+
+@media screen and (max-width: 600px) {
+  .night {
+    border-right: none;
+    border-bottom: 2px solid white;
+  }
 }

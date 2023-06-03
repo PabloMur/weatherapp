@@ -13,12 +13,24 @@
   justify-content: center;
 }
 
+@media screen and (max-width: 600px) {
+  .city {
+    width: 100%;
+  }
+}
+
 .imgCont {
   height: 100%;
   width: 15%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media screen and (max-width: 600px) {
+  .imgCont {
+    display: none;
+  }
 }
 
 .borderDay {
