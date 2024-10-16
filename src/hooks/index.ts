@@ -1,5 +1,10 @@
 import { useSetRecoilState } from "recoil";
-import { APIgetWeather } from "../lib/APiCalls";
+import {
+  APIgetWeather,
+  APIgetWeatherMontevideo,
+  APIgetWeatherTrenqueLauquen,
+  APIgetWeatherTucuman,
+} from "../lib/APiCalls";
 import {
   cityNameAtom,
   tmpAtom,
@@ -31,4 +36,61 @@ export const useGetWeather = () => {
     isDayRes == 1 ? isDaySetter(true) : isDaySetter(false);
   };
   return putCityName;
+};
+
+export const useGetWeatherTucuman = () => {
+  return async () => {
+    try {
+      const weatherTucuman = await APIgetWeatherTucuman();
+      if (weatherTucuman) {
+        console.log("Datos del clima de Tucumán:", weatherTucuman);
+        return weatherTucuman.current.temp_c;
+      } else {
+        console.error("No se pudo obtener el clima de Tucumán");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error al llamar a la API:", error);
+      return null;
+    }
+  };
+};
+
+export const useGetWeatherTrenqueLauquen = () => {
+  return async () => {
+    try {
+      const weatherTrenqueLauquen = await APIgetWeatherTrenqueLauquen();
+      if (weatherTrenqueLauquen) {
+        console.log(
+          "Datos del clima de Trenque Lauquen:",
+          weatherTrenqueLauquen
+        );
+        return weatherTrenqueLauquen.current.temp_c;
+      } else {
+        console.error("No se pudo obtener el clima de Trenque Lauquen");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error al llamar a la API de Trenque Lauquen:", error);
+      return null;
+    }
+  };
+};
+
+export const useGetWeatherMontevideo = () => {
+  return async () => {
+    try {
+      const weatherMontevideo = await APIgetWeatherMontevideo();
+      if (weatherMontevideo) {
+        console.log("Datos del clima de Montevideo:", weatherMontevideo);
+        return weatherMontevideo.current.temp_c;
+      } else {
+        console.error("No se pudo obtener el clima de Montevideo");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error al llamar a la API de Montevideo:", error);
+      return null;
+    }
+  };
 };
