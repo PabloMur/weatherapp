@@ -12,7 +12,9 @@ class HttpClient {
   private headers: HeadersInit;
 
   constructor() {
-    this.baseUrl = import.meta.env.VITE_API_BASE_URL || "https://weatherapi-com.p.rapidapi.com";
+    this.baseUrl =
+      import.meta.env.VITE_API_BASE_URL ||
+      "https://weatherapi-com.p.rapidapi.com";
     this.headers = {
       "X-RapidAPI-Key": import.meta.env.VITE_RAPIDAPI_KEY || "",
       "X-RapidAPI-Host": import.meta.env.VITE_RAPIDAPI_HOST || "",
@@ -20,15 +22,20 @@ class HttpClient {
     };
   }
 
-  private buildUrl(endpoint: string, params?: Record<string, string | number>): string {
-    const url = new URL(endpoint.startsWith("http") ? endpoint : `${this.baseUrl}${endpoint}`);
-    
+  private buildUrl(
+    endpoint: string,
+    params?: Record<string, string | number>,
+  ): string {
+    const url = new URL(
+      endpoint.startsWith("http") ? endpoint : `${this.baseUrl}${endpoint}`,
+    );
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         url.searchParams.append(key, String(value));
       });
     }
-    
+
     return url.toString();
   }
 

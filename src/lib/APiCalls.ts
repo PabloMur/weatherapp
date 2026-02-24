@@ -1,8 +1,14 @@
 import { httpClient } from "./httpClient";
 import { WEATHER_LOCATIONS } from "./weatherLocations";
-import type { ForecastResponse, CurrentWeatherResponse, SearchResult } from "../types/weather";
+import type {
+  ForecastResponse,
+  CurrentWeatherResponse,
+  SearchResult,
+} from "../types/weather";
 
-async function getWeatherByLocation(locationKey: keyof typeof WEATHER_LOCATIONS) {
+async function getWeatherByLocation(
+  locationKey: keyof typeof WEATHER_LOCATIONS,
+) {
   const location = WEATHER_LOCATIONS[locationKey];
   return httpClient.get<CurrentWeatherResponse>(`/current.json`, {
     params: { q: location.coords },
@@ -27,14 +33,18 @@ export async function APIgetWeatherTucuman() {
 }
 
 // Clima + forecast de 7 días para una ciudad arbitraria (query = nombre o lat,lon)
-export async function APIgetForecast(cityQuery: string): Promise<ForecastResponse> {
+export async function APIgetForecast(
+  cityQuery: string,
+): Promise<ForecastResponse> {
   return httpClient.get<ForecastResponse>("/forecast.json", {
     params: { q: cityQuery, days: 7 },
   });
 }
 
 // Autocompletado de ciudades
-export async function APISearchCities(searchTerm: string): Promise<SearchResult[]> {
+export async function APISearchCities(
+  searchTerm: string,
+): Promise<SearchResult[]> {
   return httpClient.get<SearchResult[]>("/search.json", {
     params: { q: searchTerm },
   });

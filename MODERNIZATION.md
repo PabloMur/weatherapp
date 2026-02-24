@@ -3,11 +3,13 @@
 ## Cambios Implementados
 
 ### 1. **Seguridad: API Keys Protegidas** ✅
+
 - Las credenciales ahora están en `.env.local` (git-ignored)
 - `.env.example` como referencia para nuevos desarrolladores
 - Carga automática via `import.meta.env` de Vite
 
 **Antes:**
+
 ```typescript
 headers: {
   "X-RapidAPI-Key": "604c4a73bcmsh15c5083584728f9p1678acjsn3f28db565705", // ¡Expuesta!
@@ -15,18 +17,21 @@ headers: {
 ```
 
 **Ahora:**
+
 ```typescript
 this.headers = {
-  "X-RapidAPI-Key": import.meta.env.VITE_RAPIDAPI_KEY
-}
+  "X-RapidAPI-Key": import.meta.env.VITE_RAPIDAPI_KEY,
+};
 ```
 
 ---
 
 ### 2. **HTTP Client Reutilizable** ✅
+
 Archivo: `src/lib/httpClient.ts`
 
 Beneficios:
+
 - ✅ Centralización de llamadas HTTP
 - ✅ Manejo consistente de errores
 - ✅ Headers configurados automáticamente
@@ -34,17 +39,19 @@ Beneficios:
 - ✅ Escalable para múltiples endpoints
 
 **Uso:**
+
 ```typescript
 import { httpClient } from "@lib/httpClient";
 
 const data = await httpClient.get("/current.json", {
-  params: { q: "-34.90%2C-56.19" }
+  params: { q: "-34.90%2C-56.19" },
 });
 ```
 
 ---
 
 ### 3. **Configuración Centralizada de Ubicaciones** ✅
+
 Archivo: `src/lib/weatherLocations.ts`
 
 ```typescript
@@ -53,6 +60,7 @@ const location = WEATHER_LOCATIONS.montevideo;
 ```
 
 Beneficios:
+
 - 📍 Single source of truth para coordenadas
 - 🔧 Fácil agregar nuevas ciudades
 - 💪 Type-safe con TypeScript
@@ -60,6 +68,7 @@ Beneficios:
 ---
 
 ### 4. **Simplificación de APiCalls** ✅
+
 Antes: 120 líneas con código duplicado
 Ahora: 25 líneas limpias y DRY
 
@@ -73,9 +82,11 @@ export async function APIgetWeather() {
 ---
 
 ### 5. **Path Aliases Configurados** ✅
+
 Archivos: `vite.config.ts` + `tsconfig.json`
 
 **Imports mejorados:**
+
 ```typescript
 // Antes
 import { useGetWeather } from "../../../hooks";
@@ -85,6 +96,7 @@ import { useGetWeather } from "@hooks";
 ```
 
 Aliases disponibles:
+
 - `@` → `src/`
 - `@components` → `src/components/`
 - `@hooks` → `src/hooks/`
