@@ -22,7 +22,7 @@ const Time: React.FC = () => {
     const hours = time.getHours();
     const nuevoMomentoDelDia = asignarMomentoDelDia(hours);
     setMomentoDelDia(nuevoMomentoDelDia);
-  }, [time]);
+  }, [time, setMomentoDelDia]);
 
   const hours = time.getHours();
   const minutes = time.getMinutes();
