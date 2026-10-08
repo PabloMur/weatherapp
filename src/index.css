@@ -2,7 +2,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: var(--numbers);
 }
 :root {
   --morning-color: #fdb813;
@@ -12,4 +11,8 @@
   --midnight-color: black;
   /*tipografias*/
   --numbers: "Chakra Petch", sans-serif;
+}
+body {
+  font-family: var(--numbers);
+  -webkit-font-smoothing: antialiased;
 }

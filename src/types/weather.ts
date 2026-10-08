@@ -8,6 +8,7 @@ export interface CurrentWeather {
   temp_c: number;
   feelslike_c: number;
   humidity: number;
+  wind_kph: number;
   is_day: 0 | 1;
   condition: WeatherCondition;
 }
@@ -22,6 +23,15 @@ export interface WeatherLocation {
   localtime: string;
 }
 
+export interface ForecastHour {
+  time_epoch: number;
+  time: string;
+  temp_c: number;
+  chance_of_rain: number;
+  chance_of_snow: number;
+  condition: WeatherCondition;
+}
+
 export interface ForecastDay {
   date: string;
   day: {
@@ -29,6 +39,11 @@ export interface ForecastDay {
     mintemp_c: number;
     condition: WeatherCondition;
   };
+  astro: {
+    sunrise: string;
+    sunset: string;
+  };
+  hour: ForecastHour[];
 }
 
 export interface ForecastResponse {

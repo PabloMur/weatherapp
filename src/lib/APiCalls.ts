@@ -37,7 +37,7 @@ export async function APIgetForecast(
   cityQuery: string,
 ): Promise<ForecastResponse> {
   return httpClient.get<ForecastResponse>("/forecast.json", {
-    params: { q: cityQuery, days: 7 },
+    params: { q: cityQuery, days: 7, lang: "es" },
   });
 }
 

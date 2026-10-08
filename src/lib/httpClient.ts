@@ -45,6 +45,8 @@ class HttpClient {
       const response = await fetch(url, {
         method: "GET",
         headers: this.headers,
+        // Sin respuesta en 10 s se corta, para que la UI pase al modo offline
+        signal: AbortSignal.timeout(10_000),
         ...options,
       });
 

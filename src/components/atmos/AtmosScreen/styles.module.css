@@ -1,0 +1,128 @@
+/*
+ * Cada franja horaria es un tema: los componentes de ATMOS sólo usan
+ * estas variables, así que cambiar data-phase repinta toda la pantalla.
+ */
+.screen {
+  --theme-fade: 0.6s ease;
+  --display: "Chakra Petch", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --page: #0b0c10;
+
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  transition:
+    background-color var(--theme-fade),
+    color var(--theme-fade);
+}
+
+.screen[data-phase="alba"] {
+  color-scheme: dark;
+  --bg: #56515d;
+  --fg: #f4e7df;
+  --dim: #d4c9cc;
+  --line: #7d7786;
+  --track: #6c6677;
+  --accent: #db8c78;
+  --on-accent: #2a1d1c;
+  --secondary: #ab92f6;
+  --cloud: #6b6573;
+  --cloud-edge: #8a8392;
+  --fog: #aea8b1;
+  --scan-opacity: 0.1;
+}
+
+.screen[data-phase="dia"] {
+  color-scheme: light;
+  --bg: #e9e4d1;
+  --fg: #17171b;
+  --dim: #5d5a50;
+  --line: #b9b39f;
+  --track: #cdc7b2;
+  --accent: #e3552c;
+  --on-accent: #1a1210;
+  --secondary: #1d6d7c;
+  --cloud: #d6d0bc;
+  --cloud-edge: #9f9985;
+  --fog: #b5af9c;
+  --scan-opacity: 0.14;
+}
+
+.screen[data-phase="ocaso"] {
+  color-scheme: dark;
+  --bg: #221a2b;
+  --fg: #f7e3dc;
+  --dim: #ab9caa;
+  --line: #4e4159;
+  --track: #44394d;
+  --accent: #ff5d7d;
+  --on-accent: #2a0d16;
+  --secondary: #f3e04d;
+  --cloud: #3e3448;
+  --cloud-edge: #5e5168;
+  --fog: #6a5d70;
+  --scan-opacity: 0.08;
+}
+
+.screen[data-phase="noche"] {
+  color-scheme: dark;
+  --bg: #0d141d;
+  --fg: #d7f6ec;
+  --dim: #8c96a2;
+  --line: #343c47;
+  --track: #2c333d;
+  --accent: #38f0c5;
+  --on-accent: #052019;
+  --secondary: #a07ffd;
+  --cloud: #2a3542;
+  --cloud-edge: #4a5868;
+  --fog: #5a6878;
+  --scan-opacity: 0.07;
+}
+
+.device {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  max-width: 480px;
+  padding: 28px 16px 44px;
+  background: var(--bg);
+  transition: background-color var(--theme-fade);
+}
+
+.alert {
+  margin-top: -12px;
+  padding: 10px 12px;
+  border: 1px dashed var(--accent);
+  border-radius: 4px;
+  font: 500 12px/1.4 var(--mono);
+  letter-spacing: 0.1em;
+  color: var(--fg);
+}
+
+/* En pantallas anchas la app se muestra como un dispositivo sobre fondo oscuro */
+@media screen and (min-width: 600px) {
+  .screen {
+    align-items: flex-start;
+    padding: 48px 16px;
+    background: var(--page);
+  }
+
+  .device {
+    padding: 36px 32px 44px;
+    border-radius: 32px;
+    box-shadow: 0 30px 80px rgb(0 0 0 / 0.45);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen,
+  .screen * {
+    transition: none !important;
+  }
+}
