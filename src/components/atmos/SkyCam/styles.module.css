@@ -1,0 +1,257 @@
+.frame {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 540 / 356;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color var(--theme-fade);
+}
+
+.hud {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  right: 16px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font: 400 11px/1 var(--mono);
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  pointer-events: none;
+}
+
+.scene {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.scene * {
+  transition:
+    fill var(--theme-fade),
+    stroke var(--theme-fade),
+    stop-color var(--theme-fade);
+}
+
+.glowStop {
+  stop-color: var(--secondary);
+}
+
+.scan {
+  fill: var(--fg);
+  opacity: var(--scan-opacity);
+}
+
+.body {
+  fill: var(--accent);
+}
+
+/* ---------- Grilla ---------- */
+
+.ray,
+.gridLine {
+  stroke: var(--line);
+  stroke-width: 1.2;
+}
+
+.gridLine {
+  animation: grid linear infinite;
+}
+
+.frame[data-condition="niebla"] .grid {
+  opacity: 0.45;
+}
+
+@keyframes grid {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  16.66% {
+    transform: translateY(12px);
+    opacity: 1;
+  }
+  33.33% {
+    transform: translateY(24px);
+  }
+  50% {
+    transform: translateY(40px);
+  }
+  66.66% {
+    transform: translateY(60px);
+  }
+  83.33% {
+    transform: translateY(86px);
+  }
+  100% {
+    transform: translateY(122px);
+  }
+}
+
+.horizon {
+  stroke: var(--secondary);
+  stroke-width: 2;
+}
+
+/* ---------- Cielo ---------- */
+
+.star {
+  fill: var(--fg);
+  animation: twinkle ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  to {
+    opacity: 0.25;
+  }
+}
+
+.cloud {
+  animation: cloudDrift ease-in-out infinite alternate;
+}
+
+.cloudBack {
+  opacity: 0.55;
+}
+
+.cloudTop {
+  stop-color: var(--cloud-top);
+}
+
+.cloudBottom {
+  stop-color: var(--cloud);
+}
+
+.cloudRim {
+  fill: var(--cloud-rim);
+  opacity: 0.85;
+}
+
+/* Con lluvia o tormenta la luz casi no atraviesa las nubes */
+.frame[data-condition="lluvia"] .cloudRim,
+.frame[data-condition="tormenta"] .cloudRim {
+  opacity: 0.45;
+}
+
+@keyframes cloudDrift {
+  from {
+    transform: translateX(calc(var(--drift) * -1));
+  }
+  to {
+    transform: translateX(var(--drift));
+  }
+}
+
+.fog {
+  fill: var(--fog);
+  opacity: 0.55;
+  animation: drift ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(-16px);
+  }
+  to {
+    transform: translateX(16px);
+  }
+}
+
+/* ---------- Precipitación ---------- */
+
+.drop {
+  stroke: var(--secondary);
+  stroke-width: 2;
+  stroke-linecap: round;
+  animation: rain linear infinite;
+}
+
+@keyframes rain {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-114px, 392px);
+  }
+}
+
+.flake {
+  fill: var(--fg);
+  animation: snow linear infinite;
+}
+
+@keyframes snow {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(10px, 95px);
+  }
+  50% {
+    transform: translate(-6px, 190px);
+  }
+  75% {
+    transform: translate(10px, 285px);
+  }
+  100% {
+    transform: translate(0, 380px);
+  }
+}
+
+/* ---------- Tormenta ---------- */
+
+/* step-end: el rayo aparece y desaparece de golpe, sin fundidos */
+.bolt {
+  fill: var(--secondary);
+  animation: bolt 5s step-end infinite;
+}
+
+@keyframes bolt {
+  0%,
+  8% {
+    opacity: 1;
+  }
+  4% {
+    opacity: 0.15;
+  }
+  42%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.flash {
+  fill: var(--fg);
+  opacity: 0;
+  animation: flash 5s step-end infinite;
+}
+
+@keyframes flash {
+  0% {
+    opacity: 0.2;
+  }
+  8% {
+    opacity: 0.12;
+  }
+  3%,
+  10%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gridLine,
+  .star,
+  .cloud,
+  .fog,
+  .drop,
+  .flake,
+  .bolt,
+  .flash {
+    animation: none;
+  }
+}

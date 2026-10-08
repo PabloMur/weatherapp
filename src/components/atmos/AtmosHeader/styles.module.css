@@ -1,0 +1,112 @@
+.header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.meta {
+  font: 400 13px/1.3 var(--mono);
+  letter-spacing: 0.1em;
+  color: var(--dim);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 500 13px/1 var(--mono);
+  letter-spacing: 0.14em;
+  color: var(--dim);
+}
+
+.led {
+  width: 10px;
+  height: 10px;
+  background: var(--secondary);
+}
+
+.status[data-status="live"] .led {
+  animation: blink 2.4s steps(2, jump-none) infinite;
+}
+
+.status[data-status="sync"] .led {
+  animation: blink 0.5s steps(2, jump-none) infinite;
+}
+
+.status[data-status="offline"] .led {
+  background: var(--accent);
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.city {
+  all: unset;
+  cursor: pointer;
+  font: 700 clamp(26px, 8vw, 38px) / 1.05 var(--display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--fg);
+  overflow-wrap: anywhere;
+}
+
+.city:hover,
+.city[aria-expanded="true"] {
+  color: var(--accent);
+}
+
+.city:focus-visible,
+.locate:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.locate {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font: 400 13px/1.3 var(--mono);
+  letter-spacing: 0.1em;
+  color: var(--dim);
+}
+
+.lens {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: square;
+  transition: color 0.2s;
+}
+
+.locate:hover,
+.locate[aria-expanded="true"] {
+  color: var(--accent);
+}
+
+.clock {
+  flex-shrink: 0;
+  font: 700 clamp(26px, 8vw, 38px) / 1.05 var(--display);
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .led {
+    animation: none !important;
+  }
+}

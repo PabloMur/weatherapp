@@ -39,3 +39,9 @@ export const isDay = atom({
   key: "isDay",
   default: true,
 });
+
+// Ciudad actualmente seleccionada — puede ser un nombre o "lat,lon"
+export const selectedCityAtom = atom<string>({
+  key: "selectedCity",
+  default: "-38,-57.56",
+});

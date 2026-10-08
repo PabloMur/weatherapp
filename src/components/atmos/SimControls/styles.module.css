@@ -1,0 +1,65 @@
+.sim {
+  padding-top: 28px;
+  border-top: 1px dashed var(--line);
+  transition: border-color var(--theme-fade);
+}
+
+.heading {
+  font: 400 13px/1 var(--mono);
+  letter-spacing: 0.14em;
+  color: var(--dim);
+}
+
+.heading:not(:first-child) {
+  margin-top: 22px;
+}
+
+.phases,
+.conditions {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.phases {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.conditions {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.btn {
+  min-height: 46px;
+  padding: 0 4px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: transparent;
+  font: 700 clamp(11px, 3.2vw, 14px) / 1 var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--fg);
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.tall {
+  min-height: 52px;
+}
+
+.btn:hover {
+  border-color: var(--accent);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}

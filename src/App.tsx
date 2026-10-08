@@ -2,13 +2,17 @@ import { Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { AppRoutes } from "./router";
 import { RecoilRoot } from "recoil";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+
 function App() {
   return (
     <Suspense>
       <RecoilRoot>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
+        <ErrorBoundary>
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </ErrorBoundary>
       </RecoilRoot>
     </Suspense>
   );

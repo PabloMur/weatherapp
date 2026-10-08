@@ -1,79 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import css from "./styles.module.css";
 import City from "../City";
 import { isDay } from "../../atoms";
 import { useRecoilValue } from "recoil";
 import {
-  useGetWeatherTucuman,
-  useGetWeatherMontevideo,
-  useGetWeatherTrenqueLauquen,
+  useWeatherTucuman,
+  useWeatherMontevideo,
+  useWeatherTrenqueLauquen,
 } from "../../hooks";
 
 const CityComponent: React.FC = () => {
   const borderTopColor = useRecoilValue(isDay) ? "day" : "night";
   const classes = [css.root, css[borderTopColor]].join(" ");
 
-  // Estados para almacenar las temperaturas de las tres ciudades
-  const [tucumanTemp, setTucumanTemp] = useState<number | null>(null);
-  const [montevideoTemp, setMontevideoTemp] = useState<number | null>(null);
-  const [trenqueLauquenTemp, setTrenqueLauquenTemp] = useState<number | null>(
-    null
-  );
-
-  const getTucumanTemp = useGetWeatherTucuman();
-  const getMontevideoTemp = useGetWeatherMontevideo();
-  const getTrenqueLauquenTemp = useGetWeatherTrenqueLauquen();
-
-  // useEffect para obtener la temperatura de Tucumán
-  useEffect(() => {
-    const fetchTucumanTemp = async () => {
-      try {
-        const tucTemp = await getTucumanTemp();
-        setTucumanTemp(tucTemp);
-      } catch (error) {
-        console.error("Error al obtener la temperatura de Tucumán:", error);
-      }
-    };
-
-    fetchTucumanTemp();
-  }, [getTucumanTemp]);
-
-  // useEffect para obtener la temperatura de Montevideo
-  useEffect(() => {
-    const fetchMontevideoTemp = async () => {
-      try {
-        const monTemp = await getMontevideoTemp();
-        setMontevideoTemp(monTemp);
-      } catch (error) {
-        console.error("Error al obtener la temperatura de Montevideo:", error);
-      }
-    };
-
-    fetchMontevideoTemp();
-  }, [getMontevideoTemp]);
-
-  // useEffect para obtener la temperatura de Trenque Lauquen
-  useEffect(() => {
-    const fetchTrenqueLauquenTemp = async () => {
-      try {
-        const trenTemp = await getTrenqueLauquenTemp();
-        setTrenqueLauquenTemp(trenTemp);
-      } catch (error) {
-        console.error(
-          "Error al obtener la temperatura de Trenque Lauquen:",
-          error
-        );
-      }
-    };
-
-    fetchTrenqueLauquenTemp();
-  }, [getTrenqueLauquenTemp]);
+  const { data: tucuman } = useWeatherTucuman();
+  const { data: montevideo } = useWeatherMontevideo();
+  const { data: trenqueLauquen } = useWeatherTrenqueLauquen();
 
   return (
     <div className={classes}>
-      <City name="Tucumán" temp={tucumanTemp} />
-      <City name="Montevideo" temp={montevideoTemp} />
-      <City name="Trenque Lauquen" temp={trenqueLauquenTemp} />
+      <City name="Tucumán" temp={tucuman?.current.temp_c ?? null} />
+      <City name="Montevideo" temp={montevideo?.current.temp_c ?? null} />
+      <City name="Trenque Lauquen" temp={trenqueLauquen?.current.temp_c ?? null} />
     </div>
   );
 };

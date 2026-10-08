@@ -1,13 +1,5 @@
-import { Panel } from "../../components/Panel";
-import { Footer } from "../../components/Footer";
-import css from "./styles.module.css";
+import { AtmosScreen } from "../../components/atmos/AtmosScreen";
+
 export function Home() {
-  return (
-    <>
-      <div className={css.root}>
-        <Panel />
-      </div>
-      <Footer />
-    </>
-  );
+  return <AtmosScreen />;
 }

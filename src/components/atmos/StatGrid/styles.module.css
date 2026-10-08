@@ -1,0 +1,41 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.card {
+  padding: 18px 18px 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  transition: border-color var(--theme-fade);
+}
+
+.label {
+  font: 400 12px/1 var(--mono);
+  letter-spacing: 0.14em;
+  color: var(--dim);
+}
+
+.value {
+  margin-top: 10px;
+  font: 600 clamp(22px, 7vw, 30px) / 1 var(--display);
+  white-space: nowrap;
+}
+
+.track {
+  margin-top: 12px;
+  height: 4px;
+  background: var(--track);
+  transition: background-color var(--theme-fade);
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  min-width: 4px;
+  background: var(--secondary);
+  transition:
+    width 0.6s ease,
+    background-color var(--theme-fade);
+}

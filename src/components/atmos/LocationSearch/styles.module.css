@@ -1,0 +1,112 @@
+.root {
+  margin-top: 10px;
+  font-family: var(--mono);
+}
+
+.prompt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 6px 0 12px;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+}
+
+.ps1 {
+  font: 600 13px/1 var(--mono);
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: 500 14px/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg);
+  caret-color: var(--accent);
+}
+
+.input::placeholder {
+  color: var(--dim);
+  opacity: 0.7;
+}
+
+.busy {
+  color: var(--dim);
+  animation: pulse 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  to {
+    opacity: 0.2;
+  }
+}
+
+.action {
+  all: unset;
+  cursor: pointer;
+  padding: 7px 8px;
+  border-radius: 3px;
+  font: 600 12px/1 var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--dim);
+}
+
+.action:hover,
+.action:focus-visible {
+  color: var(--on-accent);
+  background: var(--accent);
+}
+
+.note {
+  margin-top: 8px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--dim);
+}
+
+.list {
+  margin-top: 6px;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.option {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.option + .option {
+  border-top: 1px solid var(--line);
+}
+
+.option:hover,
+.option[aria-selected="true"] {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.name {
+  font: 600 13px/1.2 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.region {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-align: right;
+  opacity: 0.75;
+}
