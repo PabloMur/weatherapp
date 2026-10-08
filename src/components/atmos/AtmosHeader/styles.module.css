@@ -19,6 +19,8 @@
 }
 
 .status {
+  all: unset;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -39,6 +41,20 @@
 
 .status[data-status="sync"] .led {
   animation: blink 0.5s steps(2, jump-none) infinite;
+}
+
+.status:hover,
+.status[aria-expanded="true"] {
+  color: var(--fg);
+}
+
+.status:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.status[data-status="forecast"] .led {
+  background: var(--accent);
 }
 
 .status[data-status="offline"] .led {

@@ -20,6 +20,20 @@ export interface Station {
   sunrise: number | null;
   sunset: number | null;
   hours: ForecastHour[];
+  /** Pronóstico por día (el plan gratis de WeatherAPI trae 3) */
+  days: StationDay[];
+}
+
+export interface StationDay {
+  /** "2026-10-09", fecha local de la ciudad */
+  date: string;
+  max: number;
+  min: number;
+  condition: Condition;
+  /** Probabilidad de lluvia o nieve del día */
+  precip: number;
+  sunrise: number | null;
+  sunset: number | null;
 }
 
 /** Horas de la tira "PRÓXIMAS HORAS" (incluida AHORA); el celular muestra la mitad */
@@ -43,7 +57,7 @@ export interface Snapshot {
   max: number;
   min: number;
   hours: HourPoint[];
-  /** Hora fija del reloj al simular la franja horaria; null = reloj en vivo */
+  /** Hora fija del reloj (simulación o pronóstico); null = reloj en vivo */
   simHour: number | null;
 }
 
@@ -71,6 +85,15 @@ export function stationFromForecast(data: ForecastResponse): Station {
     sunrise: parseClock(today?.astro.sunrise),
     sunset: parseClock(today?.astro.sunset),
     hours: forecast.forecastday.flatMap((d) => d.hour ?? []),
+    days: forecast.forecastday.map((d) => ({
+      date: d.date,
+      max: d.day.maxtemp_c,
+      min: d.day.mintemp_c,
+      condition: conditionFromCode(d.day.condition.code),
+      precip: Math.max(d.day.daily_chance_of_rain ?? 0, d.day.daily_chance_of_snow ?? 0),
+      sunrise: parseClock(d.astro.sunrise),
+      sunset: parseClock(d.astro.sunset),
+    })),
   };
 }
 
@@ -91,6 +114,7 @@ export const FALLBACK_STATION: Station = {
   sunrise: null,
   sunset: null,
   hours: [],
+  days: [],
 };
 
 interface Profile {

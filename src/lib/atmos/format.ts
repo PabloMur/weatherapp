@@ -50,6 +50,18 @@ export function zonedTime(now: number, timeZone: string): ZonedTime {
 
 export const pad2 = (n: number) => String(n).padStart(2, "0");
 
+const weekdayFmt = new Intl.DateTimeFormat("es-AR", { weekday: "short", timeZone: "UTC" });
+
+/** "2026-10-09" → { weekday: "VIE", day: "09", month: "10", year: "2026" } */
+export function calendarDay(date: string) {
+  const [year, month, day] = date.split("-");
+  const weekday = weekdayFmt
+    .format(new Date(`${date}T12:00:00Z`))
+    .replace(".", "")
+    .toUpperCase();
+  return { weekday, day, month, year };
+}
+
 /** -34.6, -58.38 → "34.60°S / 58.38°W" */
 export function formatCoords(lat: number, lon: number) {
   const ns = `${Math.abs(lat).toFixed(2)}°${lat < 0 ? "S" : "N"}`;

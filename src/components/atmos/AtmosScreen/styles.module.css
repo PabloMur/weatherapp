@@ -188,3 +188,8 @@
     transition: none !important;
   }
 }
+
+/* Simulador abierto debajo del panel de pronóstico */
+.simExtra {
+  margin-top: 28px;
+}

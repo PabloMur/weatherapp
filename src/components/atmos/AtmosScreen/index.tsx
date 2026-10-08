@@ -1,6 +1,12 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForecast, useMediaQuery, useNow, useSimulation } from "../../../hooks";
 import type { Condition } from "../../../lib/atmos/conditions";
+import {
+  dayDateLabel,
+  type ForecastPick,
+  forecastOverview,
+  forecastSnapshot,
+} from "../../../lib/atmos/forecast";
 import type { Phase } from "../../../lib/atmos/phases";
 import {
   FALLBACK_STATION,
@@ -10,6 +16,7 @@ import {
 } from "../../../lib/atmos/station";
 import { AtmosHeader, type LinkStatus } from "../AtmosHeader";
 import { BootScreen } from "../BootScreen";
+import { ForecastPanel } from "../ForecastPanel";
 import { HourlyBars } from "../HourlyBars";
 import { Readout } from "../Readout";
 import { SimControls } from "../SimControls";
@@ -32,19 +39,64 @@ export function AtmosScreen() {
   );
   const offline = !forecast.data && forecast.isError;
   const booting = !forecast.data && !forecast.isError;
-  const snap = readStation(station, now, sim, !offline);
+  const hasForecast = station.days.length > 0;
+
+  // Momento del pronóstico elegido en el panel; null = AHORA (en vivo)
+  const [pick, setPick] = useState<ForecastPick | null>(null);
+  useEffect(() => setPick(null), [station.city, station.lat, station.lon]);
+
+  // El simulador queda escondido detrás del indicador de estado
+  const simActive = Boolean(sim.phase || sim.condition);
+  const [simOpen, setSimOpen] = useState(simActive);
+  const showSim = simOpen || simActive || !hasForecast;
+
+  const forecastSnap = !simActive && pick ? forecastSnapshot(station, pick) : null;
+  const snap = forecastSnap ?? readStation(station, now, sim, !offline);
+  const selectedDay = pick?.day ?? 0;
+  const overview = forecastOverview(station, now, selectedDay);
 
   let status: LinkStatus = "live";
   if (offline) status = "offline";
   else if (forecast.isPlaceholderData) status = "sync";
-  else if (sim.phase || sim.condition) status = "sim";
+  else if (simActive) status = "sim";
+  else if (forecastSnap) status = "forecast";
 
-  const handlePhase = (phase: Phase) => sim.setPhase(phase === sim.phase ? null : phase);
+  // ---- Panel de pronóstico ----
+  const clearSim = () => simActive && sim.reset();
+  const showNow = () => {
+    setPick(null);
+    clearSim();
+  };
+  const showPhase = (phase: Phase) => {
+    setPick({ day: selectedDay, phase });
+    clearSim();
+  };
+  // Hoy vuelve a AHORA; otro día conserva la franja elegida (o arranca en DÍA)
+  const showDay = (day: number) => {
+    setPick(day === 0 ? null : { day, phase: pick?.phase ?? "dia" });
+    clearSim();
+  };
+
+  // ---- Simulador ----
+  const toggleSim = () => {
+    if (simOpen || simActive) {
+      clearSim();
+      setSimOpen(false);
+    } else {
+      setSimOpen(true);
+    }
+  };
+  const handlePhase = (phase: Phase) => {
+    setPick(null);
+    sim.setPhase(phase === sim.phase ? null : phase);
+  };
   // Volver a elegir la condición real (o la ya simulada) apaga la simulación
-  const handleCondition = (condition: Condition) =>
+  const handleCondition = (condition: Condition) => {
+    setPick(null);
     sim.setCondition(
       condition === station.condition || condition === sim.condition ? null : condition,
     );
+  };
 
   return (
     <div className={css.screen} data-phase={snap.phase}>
@@ -61,6 +113,9 @@ export function AtmosScreen() {
                 tzId={station.tzId}
                 status={status}
                 simHour={snap.simHour}
+                dateLabel={forecastSnap ? dayDateLabel(station, selectedDay) : null}
+                simOpen={showSim}
+                onToggleSim={toggleSim}
               />
               {offline && (
                 <p className={css.alert} role="alert">
@@ -86,13 +141,29 @@ export function AtmosScreen() {
               <HourlyBars hours={snap.hours.slice(0, wide ? HOURS_SHOWN : HOURS_SHOWN / 2)} />
             </div>
             <div className={css.sim}>
-              <SimControls
-                phase={sim.phase}
-                condition={snap.condition}
-                onAuto={sim.reset}
-                onPhase={handlePhase}
-                onCondition={handleCondition}
-              />
+              {hasForecast && (
+                <ForecastPanel
+                  phases={overview.phases}
+                  days={overview.days}
+                  nowTemp={Math.round(station.temp)}
+                  selectedDay={selectedDay}
+                  selectedPhase={pick?.phase ?? null}
+                  onNow={showNow}
+                  onPhase={showPhase}
+                  onDay={showDay}
+                />
+              )}
+              {showSim && (
+                <div className={hasForecast ? css.simExtra : undefined}>
+                  <SimControls
+                    phase={sim.phase}
+                    condition={snap.condition}
+                    onAuto={sim.reset}
+                    onPhase={handlePhase}
+                    onCondition={handleCondition}
+                  />
+                </div>
+              )}
             </div>
           </>
         )}

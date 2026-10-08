@@ -4,10 +4,11 @@ import { formatCoords, pad2, zonedTime } from "../../../lib/atmos/format";
 import { LocationSearch } from "../LocationSearch";
 import css from "./styles.module.css";
 
-export type LinkStatus = "live" | "sim" | "sync" | "offline";
+export type LinkStatus = "live" | "forecast" | "sim" | "sync" | "offline";
 
 const STATUS_LABEL: Record<LinkStatus, string> = {
   live: "LIVE",
+  forecast: "PRONÓSTICO",
   sim: "SIM",
   sync: "SYNC",
   offline: "NO-LINK",
@@ -19,11 +20,26 @@ interface AtmosHeaderProps {
   lon: number;
   tzId: string;
   status: LinkStatus;
-  /** Hora fija cuando se simula la franja horaria */
+  /** Hora fija cuando se simula o se mira el pronóstico */
   simHour: number | null;
+  /** Fecha a mostrar en lugar de hoy (al mirar otro día del pronóstico) */
+  dateLabel: string | null;
+  simOpen: boolean;
+  /** El indicador de estado abre y cierra el simulador */
+  onToggleSim: () => void;
 }
 
-export function AtmosHeader({ city, lat, lon, tzId, status, simHour }: AtmosHeaderProps) {
+export function AtmosHeader({
+  city,
+  lat,
+  lon,
+  tzId,
+  status,
+  simHour,
+  dateLabel,
+  simOpen,
+  onToggleSim,
+}: AtmosHeaderProps) {
   const now = useNow(1000);
   const [searching, setSearching] = useState(false);
   const toggleSearch = () => setSearching((open) => !open);
@@ -35,10 +51,17 @@ export function AtmosHeader({ city, lat, lon, tzId, status, simHour }: AtmosHead
     <header className={css.header}>
       <div className={css.row}>
         <span className={css.meta}>ATMOS/OS · V2.6</span>
-        <span className={css.status} data-status={status}>
+        <button
+          type="button"
+          className={css.status}
+          data-status={status}
+          onClick={onToggleSim}
+          aria-expanded={simOpen}
+          title={simOpen ? "Cerrar simulador" : "Abrir simulador"}
+        >
           <i className={css.led} aria-hidden="true" />
           {STATUS_LABEL[status]}
-        </span>
+        </button>
       </div>
 
       <div className={css.row}>
@@ -69,7 +92,7 @@ export function AtmosHeader({ city, lat, lon, tzId, status, simHour }: AtmosHead
           </svg>
         </button>
         <span className={css.meta}>
-          {local.weekday} {local.day}.{local.month}.{local.year}
+          {dateLabel ?? `${local.weekday} ${local.day}.${local.month}.${local.year}`}
         </span>
       </div>
 

@@ -60,6 +60,18 @@ const CONDITION_STATS: Record<number, [number, number, number]> = {
   1276: [92, 46, 95],
 };
 
+// Condición de los dos días siguientes según la de hoy
+const NEXT_DAYS: Record<number, [number, number]> = {
+  1000: [1003, 1189],
+  1003: [1006, 1000],
+  1006: [1063, 1003],
+  1063: [1189, 1006],
+  1135: [1006, 1000],
+  1189: [1276, 1003],
+  1213: [1213, 1006],
+  1276: [1189, 1000],
+};
+
 const HOUR = 3600 * 1000;
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -108,32 +120,48 @@ function buildForecast(city: MockCity): ForecastResponse {
   const localMinute = Number(localNow.slice(14, 16));
   const midnight = Math.floor(now / HOUR) * HOUR - localHour * HOUR;
 
-  const mid = (city.max + city.min) / 2;
-  const amp = (city.max - city.min) / 2;
-  const tempAt = (h: number) => mid + amp * Math.cos((2 * Math.PI * (h - 15)) / 24);
-
-  const [humidity, wind, precip] = CONDITION_STATS[city.code];
-  const condition: WeatherCondition = {
-    code: city.code,
-    text: CONDITION_TEXT[city.code],
-    icon: "",
+  // Días siguientes: otra condición y la temperatura corrida, para que el
+  // panel de pronóstico muestre días distintos
+  const dayCodes = [city.code, ...NEXT_DAYS[city.code]];
+  const dayShift = [0, 2, -1];
+  const tempAt = (d: number, h: number) => {
+    const mid = (city.max + city.min) / 2 + dayShift[d];
+    const amp = (city.max - city.min) / 2;
+    return mid + amp * Math.cos((2 * Math.PI * (h - 15)) / 24);
   };
+  const conditionOf = (code: number): WeatherCondition => ({
+    code,
+    text: CONDITION_TEXT[code],
+    icon: "",
+  });
+  const round1 = (n: number) => Math.round(n * 10) / 10;
 
-  const hours: ForecastHour[] = Array.from({ length: 48 }, (_, i) => {
+  const hours: ForecastHour[] = Array.from({ length: 72 }, (_, i) => {
+    const d = Math.floor(i / 24);
+    const h = i % 24;
+    const code = dayCodes[d];
+    const [humidity, wind, precip] = CONDITION_STATS[code];
+    const temp = tempAt(d, h);
     const epoch = midnight + i * HOUR;
     return {
       time_epoch: epoch / 1000,
       time: fmt.format(epoch),
-      temp_c: Math.round(tempAt(i % 24) * 10) / 10,
-      chance_of_rain: city.code === 1213 ? 0 : precip,
-      chance_of_snow: city.code === 1213 ? precip : 0,
-      condition,
+      temp_c: round1(temp),
+      feelslike_c: round1(temp - 1 - Math.max(0, wind - 12) / 8),
+      // Más húmedo de noche que a la tarde
+      humidity: Math.min(100, Math.round(humidity - 8 * Math.cos((2 * Math.PI * (h - 15)) / 24))),
+      wind_kph: wind,
+      chance_of_rain: code === 1213 ? 0 : precip,
+      chance_of_snow: code === 1213 ? precip : 0,
+      condition: conditionOf(code),
     };
   });
 
   const minutes = localHour * 60 + localMinute;
   const isDay = minutes > clockMinutes(city.sunrise) && minutes < clockMinutes(city.sunset);
-  const temp = Math.round(tempAt(minutes / 60) * 10) / 10;
+  const temp = round1(tempAt(0, minutes / 60));
+  const [humidity, wind] = CONDITION_STATS[city.code];
+  const condition = conditionOf(city.code);
 
   return {
     location: {
@@ -154,12 +182,22 @@ function buildForecast(city: MockCity): ForecastResponse {
       condition: isDay && city.code === 1000 ? { ...condition, text: "Soleado" } : condition,
     },
     forecast: {
-      forecastday: [0, 1].map((d) => ({
-        date: hours[d * 24].time.slice(0, 10),
-        day: { maxtemp_c: city.max, mintemp_c: city.min, condition },
-        astro: { sunrise: city.sunrise, sunset: city.sunset },
-        hour: hours.slice(d * 24, d * 24 + 24),
-      })),
+      forecastday: [0, 1, 2].map((d) => {
+        const [, , precip] = CONDITION_STATS[dayCodes[d]];
+        const snow = dayCodes[d] === 1213;
+        return {
+          date: hours[d * 24].time.slice(0, 10),
+          day: {
+            maxtemp_c: city.max + dayShift[d],
+            mintemp_c: city.min + dayShift[d],
+            daily_chance_of_rain: snow ? 0 : precip,
+            daily_chance_of_snow: snow ? precip : 0,
+            condition: conditionOf(dayCodes[d]),
+          },
+          astro: { sunrise: city.sunrise, sunset: city.sunset },
+          hour: hours.slice(d * 24, d * 24 + 24),
+        };
+      }),
     },
   };
 }
