@@ -63,3 +63,15 @@
   background: var(--accent);
   color: var(--on-accent);
 }
+
+/* Escritorio: la línea punteada la dibuja la fila completa (AtmosScreen) */
+@media screen and (min-width: 1024px) {
+  .sim {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .btn {
+    font-size: 13px;
+  }
+}

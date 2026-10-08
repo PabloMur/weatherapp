@@ -42,3 +42,13 @@
   color: var(--dim);
   white-space: nowrap;
 }
+
+@media screen and (min-width: 1024px) {
+  .temp {
+    font-size: clamp(120px, 12.5vw, 196px);
+  }
+
+  .title {
+    font-size: clamp(20px, 2vw, 28px);
+  }
+}

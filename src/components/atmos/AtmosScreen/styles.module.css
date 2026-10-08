@@ -100,7 +100,7 @@
 }
 
 .alert {
-  margin-top: -12px;
+  margin-top: 18px;
   padding: 10px 12px;
   border: 1px dashed var(--accent);
   border-radius: 4px;
@@ -109,8 +109,8 @@
   color: var(--fg);
 }
 
-/* En pantallas anchas la app se muestra como un dispositivo sobre fondo oscuro */
-@media screen and (min-width: 600px) {
+/* Tablet: la app se muestra como un dispositivo sobre fondo oscuro */
+@media screen and (min-width: 600px) and (max-width: 1023px) {
   .screen {
     align-items: flex-start;
     padding: 48px 16px;
@@ -121,6 +121,64 @@
     padding: 36px 32px 44px;
     border-radius: 32px;
     box-shadow: 0 30px 80px rgb(0 0 0 / 0.45);
+  }
+}
+
+/*
+ * Escritorio: consola a pantalla completa.
+ * Izquierda la cámara y las horas; derecha la lectura, los sensores y el simulador.
+ */
+@media screen and (min-width: 1024px) {
+  .device {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    grid-template-areas:
+      "header header"
+      "scene readout"
+      "scene stats"
+      "hours sim";
+    grid-template-rows: auto auto 1fr auto;
+    column-gap: clamp(32px, 4vw, 64px);
+    row-gap: 36px;
+    max-width: 1320px;
+    padding: 40px clamp(32px, 4vw, 56px) 56px;
+  }
+
+  .header {
+    grid-area: header;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+    transition: border-color var(--theme-fade);
+  }
+
+  .scene {
+    grid-area: scene;
+  }
+
+  .readout {
+    grid-area: readout;
+    align-self: end;
+  }
+
+  .stats {
+    grid-area: stats;
+    align-self: end;
+  }
+
+  /* La línea punteada separa toda la fila inferior, no sólo el simulador */
+  .hours,
+  .sim {
+    padding-top: 28px;
+    border-top: 1px dashed var(--line);
+    transition: border-color var(--theme-fade);
+  }
+
+  .hours {
+    grid-area: hours;
+  }
+
+  .sim {
+    grid-area: sim;
   }
 }
 

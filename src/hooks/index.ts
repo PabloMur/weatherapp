@@ -2,6 +2,7 @@ export { useMainWeather } from "./useMainWeather";
 export { useSearchCities } from "./useSearchCities";
 export { useForecast } from "./useForecast";
 export { useNow } from "./useNow";
+export { useMediaQuery } from "./useMediaQuery";
 export { useSimulation } from "./useSimulation";
 export {
   useWeatherTucuman,

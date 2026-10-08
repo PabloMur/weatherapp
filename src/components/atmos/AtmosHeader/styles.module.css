@@ -110,3 +110,14 @@
     animation: none !important;
   }
 }
+
+@media screen and (min-width: 1024px) {
+  .header {
+    gap: 10px;
+  }
+
+  .city,
+  .clock {
+    font-size: clamp(40px, 4vw, 56px);
+  }
+}

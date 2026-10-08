@@ -255,3 +255,12 @@
     animation: none;
   }
 }
+
+@media screen and (min-width: 1024px) {
+  .hud {
+    top: 18px;
+    left: 22px;
+    right: 22px;
+    font-size: 12px;
+  }
+}

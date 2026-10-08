@@ -22,6 +22,9 @@ export interface Station {
   hours: ForecastHour[];
 }
 
+/** Horas de la tira "PRÓXIMAS HORAS" (incluida AHORA); el celular muestra la mitad */
+export const HOURS_SHOWN = 12;
+
 export interface HourPoint {
   label: string;
   temp: number;
@@ -126,7 +129,7 @@ function simFeelsLike(temp: number, windKph: number, humidity: number) {
 function liveSnapshot(st: Station, now: number, phase: Phase): Snapshot {
   const upcoming = st.hours
     .filter((h) => h.time_epoch * 1000 > now)
-    .slice(0, 5)
+    .slice(0, HOURS_SHOWN - 1)
     .map((h) => ({ label: `${h.time.slice(11, 13)}h`, temp: Math.round(h.temp_c) }));
 
   return {
@@ -185,7 +188,7 @@ function simulatedSnapshot(
     precip,
     max: Math.round(mid + amp),
     min: Math.round(mid - amp),
-    hours: [0, 1, 2, 3, 4, 5].map((i) =>
+    hours: Array.from({ length: HOURS_SHOWN }, (_, i) =>
       i === 0
         ? { label: "AHORA", temp }
         : { label: `${pad2((start + i) % 24)}h`, temp: tempAt(start + i) },

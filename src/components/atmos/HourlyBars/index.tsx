@@ -1,8 +1,9 @@
 import type { HourPoint } from "../../../lib/atmos/station";
 import css from "./styles.module.css";
 
-const MIN_BAR = 8;
-const MAX_BAR = 64;
+// Alto de la barra en % del slot (el alto del slot lo define el CSS)
+const MIN_BAR = 12.5;
+const MAX_BAR = 100;
 
 interface HourlyBarsProps {
   hours: HourPoint[];
@@ -16,7 +17,8 @@ export function HourlyBars({ hours }: HourlyBarsProps) {
   // mínimo de 2° (centrado) para que una diferencia de 1° no parezca un salto enorme
   const span = Math.max(hi - lo, 2);
   const base = (hi + lo) / 2 - span / 2;
-  const heightOf = (t: number) => MIN_BAR + ((t - base) / span) * (MAX_BAR - MIN_BAR);
+  const heightOf = (t: number) =>
+    `${MIN_BAR + ((t - base) / span) * (MAX_BAR - MIN_BAR)}%`;
 
   return (
     <section className={css.section}>
