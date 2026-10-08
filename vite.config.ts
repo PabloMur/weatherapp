@@ -5,6 +5,8 @@ import path from "path";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  // RAPIDAPI_KEY (nombre usado en Vercel) también se expone al cliente
+  envPrefix: ["VITE_", "RAPIDAPI_"],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

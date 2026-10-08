@@ -1,6 +1,6 @@
 /**
- * HTTP Client para llamadas a la API de Weather
- * Centraliza la configuración y reutiliza headers
+ * HTTP Client para llamadas a WeatherAPI.com (https://www.weatherapi.com)
+ * Centraliza la configuración y agrega la API key a cada pedido
  */
 
 interface FetchOptions extends RequestInit {
@@ -9,17 +9,14 @@ interface FetchOptions extends RequestInit {
 
 class HttpClient {
   private baseUrl: string;
-  private headers: HeadersInit;
+  private apiKey: string;
 
   constructor() {
     this.baseUrl =
-      import.meta.env.VITE_API_BASE_URL ||
-      "https://weatherapi-com.p.rapidapi.com";
-    this.headers = {
-      "X-RapidAPI-Key": import.meta.env.VITE_RAPIDAPI_KEY || "",
-      "X-RapidAPI-Host": import.meta.env.VITE_RAPIDAPI_HOST || "",
-      "Content-Type": "application/json",
-    };
+      import.meta.env.VITE_API_BASE_URL || "https://api.weatherapi.com/v1";
+    // Key de WeatherAPI.com. Se llama RAPIDAPI_KEY porque así quedó cargada en
+    // Vercel; vite.config.ts expone el prefijo RAPIDAPI_ al cliente.
+    this.apiKey = import.meta.env.RAPIDAPI_KEY || "";
   }
 
   private buildUrl(
@@ -29,6 +26,7 @@ class HttpClient {
     const url = new URL(
       endpoint.startsWith("http") ? endpoint : `${this.baseUrl}${endpoint}`,
     );
+    url.searchParams.set("key", this.apiKey);
 
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
@@ -44,7 +42,6 @@ class HttpClient {
       const url = this.buildUrl(endpoint, options?.params);
       const response = await fetch(url, {
         method: "GET",
-        headers: this.headers,
         // Sin respuesta en 10 s se corta, para que la UI pase al modo offline
         signal: AbortSignal.timeout(10_000),
         ...options,
