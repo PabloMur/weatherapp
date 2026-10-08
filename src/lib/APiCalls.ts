@@ -6,6 +6,9 @@ import type {
   SearchResult,
 } from "../types/weather";
 
+// Con VITE_USE_MOCK=true (npm run dev:mock) no se llama a la API real
+const USE_MOCK = import.meta.env.VITE_USE_MOCK === "true";
+
 async function getWeatherByLocation(
   locationKey: keyof typeof WEATHER_LOCATIONS,
 ) {
@@ -36,6 +39,7 @@ export async function APIgetWeatherTucuman() {
 export async function APIgetForecast(
   cityQuery: string,
 ): Promise<ForecastResponse> {
+  if (USE_MOCK) return (await import("./mockWeather")).mockForecast(cityQuery);
   return httpClient.get<ForecastResponse>("/forecast.json", {
     params: { q: cityQuery, days: 7, lang: "es" },
   });
@@ -45,6 +49,7 @@ export async function APIgetForecast(
 export async function APISearchCities(
   searchTerm: string,
 ): Promise<SearchResult[]> {
+  if (USE_MOCK) return (await import("./mockWeather")).mockSearch(searchTerm);
   return httpClient.get<SearchResult[]>("/search.json", {
     params: { q: searchTerm },
   });
