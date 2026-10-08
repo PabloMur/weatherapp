@@ -110,10 +110,39 @@
 }
 
 .cloud {
-  fill: var(--cloud);
-  stroke: var(--cloud-edge);
-  stroke-width: 1.5;
-  animation: drift ease-in-out infinite alternate;
+  animation: cloudDrift ease-in-out infinite alternate;
+}
+
+.cloudBack {
+  opacity: 0.55;
+}
+
+.cloudTop {
+  stop-color: var(--cloud-top);
+}
+
+.cloudBottom {
+  stop-color: var(--cloud);
+}
+
+.cloudRim {
+  fill: var(--cloud-rim);
+  opacity: 0.85;
+}
+
+/* Con lluvia o tormenta la luz casi no atraviesa las nubes */
+.frame[data-condition="lluvia"] .cloudRim,
+.frame[data-condition="tormenta"] .cloudRim {
+  opacity: 0.45;
+}
+
+@keyframes cloudDrift {
+  from {
+    transform: translateX(calc(var(--drift) * -1));
+  }
+  to {
+    transform: translateX(var(--drift));
+  }
 }
 
 .fog {

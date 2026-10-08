@@ -49,21 +49,99 @@ const RAYS = Array.from({ length: 19 }, (_, i) => CX + (i - 9) * 215);
 const GRID_OFFSETS = [0, 12, 24, 40, 60, 86];
 const GRID_CYCLE = 6;
 
-const CLOUDS = [
-  { x: 55, y: 66, w: 246, h: 32, dur: 26 },
-  { x: 316, y: 42, w: 162, h: 24, dur: 34 },
-  { x: 172, y: 112, w: 302, h: 38, dur: 30 },
-  { x: 21, y: 160, w: 232, h: 30, dur: 38 },
+// Bollos de un cúmulo: [centro x, radio, altura de la cima] en fracciones de w / h
+type Bump = readonly [number, number, number];
+
+const PUFFS_A: Bump[] = [[0.22, 0.3, 0.62], [0.45, 0.42, 1], [0.7, 0.32, 0.75], [0.86, 0.2, 0.5]];
+const PUFFS_B: Bump[] = [[0.25, 0.36, 0.85], [0.55, 0.3, 0.7], [0.78, 0.24, 0.55]];
+const PUFFS_C: Bump[] = [[0.18, 0.22, 0.55], [0.38, 0.34, 0.85], [0.6, 0.4, 1], [0.82, 0.26, 0.65]];
+
+interface CloudSpec {
+  /** Borde izquierdo y línea de base (abajo, plana) */
+  x: number;
+  base: number;
+  w: number;
+  h: number;
+  puffs: Bump[];
+  /** Las de fondo son más tenues y se mueven menos (paralaje) */
+  back: boolean;
+  /** Las de nivel 2 sólo aparecen con lluvia o tormenta */
+  level: 1 | 2;
+  dur: number;
+  drift: number;
+}
+
+// Ordenadas de atrás hacia adelante
+const CLOUDS: CloudSpec[] = [
+  { x: 196, base: 80, w: 140, h: 44, puffs: PUFFS_B, back: true, level: 1, dur: 46, drift: 10 },
+  { x: 420, base: 98, w: 110, h: 38, puffs: PUFFS_C, back: true, level: 1, dur: 52, drift: 8 },
+  { x: 16, base: 134, w: 210, h: 84, puffs: PUFFS_A, back: false, level: 1, dur: 30, drift: 22 },
+  { x: 290, base: 178, w: 220, h: 80, puffs: PUFFS_C, back: false, level: 1, dur: 36, drift: 26 },
+  { x: 120, base: 218, w: 200, h: 64, puffs: PUFFS_B, back: false, level: 2, dur: 40, drift: 18 },
 ];
 
-const CLOUD_COUNT: Record<Condition, number> = {
+const CLOUD_LEVEL: Record<Condition, 0 | 1 | 2> = {
   claro: 0,
-  nubes: 3,
-  lluvia: 4,
-  tormenta: 4,
-  nieve: 2,
+  nubes: 1,
+  lluvia: 2,
+  tormenta: 2,
+  nieve: 1,
   niebla: 0,
 };
+
+// Cortes horizontales en la base de la nube, como las franjas del sol:
+// [distancia a la base, alto] en fracciones de h
+const CLOUD_SLICES = [
+  [0.3, 0.025],
+  [0.19, 0.04],
+  [0.08, 0.06],
+];
+
+function CloudShape({ c, dy = 0, fill }: { c: CloudSpec; dy?: number; fill: string }) {
+  const baseH = c.h * 0.42;
+  return (
+    <g fill={fill} transform={dy ? `translate(0 ${dy})` : undefined}>
+      <rect x={c.x} y={c.base - baseH} width={c.w} height={baseH} rx={baseH / 2} />
+      {c.puffs.map(([fx, fr, top]) => (
+        <circle key={fx} cx={c.x + fx * c.w} cy={c.base - (top - fr) * c.h} r={fr * c.h} />
+      ))}
+    </g>
+  );
+}
+
+function Cloud({ c, id }: { c: CloudSpec; id: string }) {
+  // Región de las máscaras con margen para los bollos de los costados
+  const box = { x: c.x - 8, y: c.base - c.h - 8, width: c.w + 16, height: c.h + 16 };
+  const style = {
+    "--drift": `${c.drift}px`,
+    ...timing(c.dur, -c.dur * 0.4),
+  } as CSSProperties;
+
+  return (
+    <g className={c.back ? `${css.cloud} ${css.cloudBack}` : css.cloud} style={style}>
+      <mask id={`${id}-body`} maskUnits="userSpaceOnUse" {...box}>
+        <CloudShape c={c} fill="#fff" />
+        {CLOUD_SLICES.map(([at, h]) => (
+          <rect
+            key={at}
+            x={box.x}
+            y={c.base - at * c.h - (h * c.h) / 2}
+            width={box.width}
+            height={h * c.h}
+            fill="#000"
+          />
+        ))}
+      </mask>
+      {/* Borde iluminado: la nube menos una copia corrida hacia abajo */}
+      <mask id={`${id}-rim`} maskUnits="userSpaceOnUse" {...box}>
+        <CloudShape c={c} fill="#fff" />
+        <CloudShape c={c} dy={2.5} fill="#000" />
+      </mask>
+      <rect {...box} fill="url(#atmos-cloud-fill)" mask={`url(#${id}-body)`} />
+      <rect {...box} className={css.cloudRim} mask={`url(#${id}-rim)`} />
+    </g>
+  );
+}
 
 const FOG = [
   { x: 2, y: 88, w: 370, h: 10, dur: 18 },
@@ -141,6 +219,10 @@ export function SkyCam({ phase, condition }: SkyCamProps) {
           <linearGradient id="atmos-glow" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0.35" className={css.glowStop} stopOpacity="0" />
             <stop offset="1" className={css.glowStop} stopOpacity="0.16" />
+          </linearGradient>
+          <linearGradient id="atmos-cloud-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0.1" className={css.cloudTop} />
+            <stop offset="0.95" className={css.cloudBottom} />
           </linearGradient>
           <pattern id="atmos-scan" width="4" height="4" patternUnits="userSpaceOnUse">
             <rect width="4" height="1" className={css.scan} />
@@ -231,19 +313,6 @@ export function SkyCam({ phase, condition }: SkyCamProps) {
         </g>
         <line className={css.horizon} x1="0" x2={W} y1={HZ} y2={HZ} />
 
-        {CLOUDS.slice(0, CLOUD_COUNT[condition]).map((c, i) => (
-          <rect
-            key={i}
-            className={css.cloud}
-            x={c.x}
-            y={c.y}
-            width={c.w}
-            height={c.h}
-            rx={c.h / 2}
-            style={timing(c.dur, -c.dur * 0.5 * i)}
-          />
-        ))}
-
         {raining &&
           DROPS.map((d, i) => (
             <line
@@ -260,8 +329,6 @@ export function SkyCam({ phase, condition }: SkyCamProps) {
             />
           ))}
 
-        {condition === "tormenta" && <polygon className={css.bolt} points={BOLT} />}
-
         {condition === "nieve" &&
           FLAKES.map((f, i) => (
             <circle
@@ -276,6 +343,13 @@ export function SkyCam({ phase, condition }: SkyCamProps) {
               }}
             />
           ))}
+
+        {/* Lluvia y nieve quedan detrás de las nubes: parecen salir de ellas */}
+        {CLOUDS.filter((c) => c.level <= CLOUD_LEVEL[condition]).map((c, i) => (
+          <Cloud key={i} c={c} id={`atmos-cloud-${i}`} />
+        ))}
+
+        {condition === "tormenta" && <polygon className={css.bolt} points={BOLT} />}
 
         {condition === "niebla" &&
           FOG.map((f, i) => (
